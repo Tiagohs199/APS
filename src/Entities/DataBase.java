@@ -24,7 +24,7 @@ public class DataBase {
 
 	public String destiny() {
 		
-		String path = "C:\\Users\\tiago.henrique\\Desktop\\java\\APS\\src";
+		String path = "C:\\Users\\tiago e Lilian\\Desktop\\Java\\APS\\src";
 		File sourceFile = new File(path);
 		String sourceFolderStr = sourceFile.getParent();
 		
@@ -46,10 +46,14 @@ public class DataBase {
 			System.out.print("Digite o ra, nome");
 			String ra = sc.next();
 			String nome = sc.next();
-			
-			bw.write(ra+","+nome);
-			bw.newLine();
-			
+			int t = nome.length();
+			if(nome.substring(5, t).matches("[A-Z]*")){
+				bw.write(ra+","+nome);
+				bw.newLine();
+			}else {
+				System.out.println("!!!!Nome invalido!!!!");
+				menu.inicial();
+			}
 		}
 	}catch(IOException e) {
 		e.printStackTrace();
@@ -60,7 +64,7 @@ public class DataBase {
 	sc.close();
 	}
 	
-	public void getAllAluno() {
+	public List<Aluno> getAllAluno() {
 		List<Aluno> list = new ArrayList<>();
 	try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Aluno.csv"))) {
 		br.readLine();
@@ -73,18 +77,14 @@ public class DataBase {
 			String ra = fields[0];
 			String name = fields[1];
 			
-			list.add(new Aluno( ra,name));
+			list.add(new Aluno(ra,name));
 			itemCsv = br.readLine();
 		}
-		
+		return list;
 	}catch (IOException e) {
 		e.printStackTrace();
 	}
-	System.out.println("-------------------");
-	for(Aluno li: list) {
-		System.out.println(li.toString());
-	}
-	menu.back();
+	return null;
 	}
 	
 	public void addCurso() {
@@ -112,13 +112,18 @@ public class DataBase {
 				e.printStackTrace();
 			}catch (ParseException e) {
 				e.printStackTrace();
+			}catch(IllegalArgumentException e) {
+				System.out.println("-------------------");
+				System.out.println("!!!!Argumento invalido!!!!");
+				System.out.println("-------------------");
+				menu.inicial();
 			}
 		System.out.println("Adicionado com sucesso!!");
 		menu.back();
 		sc.close();
 		
 	}
-	public void getAllCurso() {
+	public List<Curso> getAllCurso() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		List<Curso> list = new ArrayList<>();
 	try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Curso.csv"))) {
@@ -135,25 +140,46 @@ public class DataBase {
 			
 			list.add(new Curso(nome, Nivel.valueOf(nivel),date));
 			itemCsv = br.readLine();
+			
 		}
-		
+		return list;
 	}catch (IOException e) {
 		e.printStackTrace();
 	}catch (ParseException e) {
 		e.printStackTrace();
-	}
-	System.out.println("-------------------");
-	for(Curso li: list) {
-		System.out.println(li.toString());
-	}
-	menu.back();
+	}return null;
 	}
 	
 public void addNota() {
-
+	Scanner sc = new Scanner(System.in);
+	System.out.println("-----------------------");
+	
+	System.out.print("Digite o ra e o curso do aluno: ");
+	String ra = sc.next();
+	String curso = sc.next();
+	
+	try(BufferedWriter bw = new BufferedWriter(new FileWriter(destiny() + "\\Database\\Aluno.csv",true))){
+			
+			System.out.print("Digite as notas (NP1,NP2,REP,EX)");
+			Double np1 = sc.nextDouble();
+			Double np2 = sc.nextDouble();
+			Double rep = sc.nextDouble();
+			Double ex = sc.nextDouble();
+			
+			
+			bw.write(ra+","+np1+","+np2+","+rep+","+ex);
+			bw.newLine();
+			
 		
-		
-		
+	}catch(IOException e) {
+		e.printStackTrace();
+		System.out.println("Lista vazia");
+		}
+	System.out.println("Adicionado com sucesso!!");
+	menu.back();
+	sc.close();
 	}
+
+
 
 }

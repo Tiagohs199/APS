@@ -1,5 +1,6 @@
 package Entities;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -17,7 +18,7 @@ public class Menu {
 				          +"--Consulta Cursos--(5)%n"
 				          +"--Id aluno--(6)%n"
 				          +"--Disciplina--(7)%n"
-				          +"--Sair--");
+				          +"--Sair--(0)");
 
 		int n = sc.nextInt();
 		
@@ -29,9 +30,17 @@ public class Menu {
 		case 3:
 			break;
 		case 4:
-			data.getAllAluno();
+			List<Aluno> lisAluno = data.getAllAluno();
+			for(Aluno li: lisAluno) {
+			System.out.println(li.toString());
+			}back();
 		case 5:
-			data.getAllCurso();
+			List<Curso> lisCurso = data.getAllCurso();
+			for(Curso list:lisCurso) {
+				System.out.println(list.toString());
+			}back();
+		case 0:
+			System.exit(0);
 		}
 	
 		

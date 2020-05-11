@@ -44,7 +44,7 @@ public class Aluno {
 
 	@Override
 	public String toString() {
-		return "Aluno --id = " + id + "- nome = " + nome + "- curso = " + curso;
+		return "Aluno --id = " + id + "- nome = " + nome;
 	}
 
 	
