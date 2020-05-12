@@ -26,7 +26,7 @@ public class DataBase {
 
 	public String destiny() {
 		
-		String path = "C:\\Users\\tiago.henrique\\Desktop\\java\\APS_\\APS\\src";
+		String path = System.getProperty("user.dir")+"\\src";
 		File sourceFile = new File(path);
 		String sourceFolderStr = sourceFile.getParent();
 		

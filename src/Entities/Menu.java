@@ -44,6 +44,8 @@ public class Menu {
 			String id = sc.next();
 			System.out.println(data.returnAluno(id));
 			back();
+		case 7:
+			System.out.println(System.getProperty("user.dir"));
 		case 0:
 			System.exit(0);
 		}
