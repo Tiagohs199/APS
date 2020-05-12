@@ -46,7 +46,7 @@ public class Aluno {
 
 	@Override
 	public String toString() {
-		return "Aluno --id = " + id + "- nome = " + nome;
+		return "Aluno - nome = " + nome+"--id = " + id  ;
 	}
 	@Override
 	public int hashCode() {

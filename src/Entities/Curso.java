@@ -11,7 +11,8 @@ public class Curso {
 	private Date ano;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 	
-	public Curso() {
+	public Curso(String nome) {
+		this.nome = nome;
 	}
 
 	public Curso(String nome, Nivel nivel, Date ano) {

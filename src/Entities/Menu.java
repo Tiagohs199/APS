@@ -16,7 +16,7 @@ public class Menu {
 				          +"--Add notas--(3)%n"
 				          +"--Consulta alunos--(4)%n"
 				          +"--Consulta Cursos--(5)%n"
-				          +"--Id aluno--(6)%n"
+				          +"--Consulta Id aluno--(6)%n"
 				          +"--Disciplina--(7)%n"
 				          +"--Sair--(0)");
 
@@ -28,20 +28,22 @@ public class Menu {
 		case 2:
 			data.addCurso();
 		case 3:
-			break;
+			data.addNota();
+			back();
 		case 4:
 			List<Aluno> lisAluno = data.getAllAluno();
-			for(Aluno li: lisAluno) {
-			System.out.println(li.toString());
-			}back();
+			 lisAluno.forEach(aluno -> System.out.println(aluno));
+			back();
 		case 5:
 			List<Curso> lisCurso = data.getAllCurso();
-			for(Curso list:lisCurso) {
-				System.out.println(list.toString());
-			}back();
+			lisCurso.forEach(curso -> System.out.println(curso));
+			back();
 			
 		case 6:
-			System.out.println(data.returnAluno("1234"));
+			System.out.print("Digite o Ra do aluno: ");
+			String id = sc.next();
+			System.out.println(data.returnAluno(id));
+			back();
 		case 0:
 			System.exit(0);
 		}
