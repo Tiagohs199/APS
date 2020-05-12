@@ -39,6 +39,9 @@ public class Menu {
 			for(Curso list:lisCurso) {
 				System.out.println(list.toString());
 			}back();
+			
+		case 6:
+			System.out.println(data.returnAluno("1234"));
 		case 0:
 			System.exit(0);
 		}

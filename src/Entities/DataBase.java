@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import Entities.enums.Nivel;
 
@@ -38,22 +39,30 @@ public class DataBase {
 	public void addAluno() {
 	Scanner sc = new Scanner(System.in);
 	System.out.println("-----------------------");
-	System.out.print("Digite o numero de alunos a ser adicionado: ");
-	int n = sc.nextInt();
+	
 	
 	try(BufferedWriter bw = new BufferedWriter(new FileWriter(destiny() + "\\Database\\Aluno.csv",true))){
+		System.out.print("Digite o numero de alunos a ser adicionado: ");
+		int n = sc.nextInt();
 		for(int i=0; i<n;i++) {
 			System.out.print("Digite o ra, nome");
 			String ra = sc.next();
 			String nome = sc.next();
-			int t = nome.length();
-			if(nome.substring(5, t).matches("[A-Z]*")){
+			if(nome.matches("[A-Za-z]*")){
+				Aluno retornado = returnAluno(ra);
+				if(retornado.getId().equals(ra)) {
+					System.out.println("!!!Ra ja cadastrado!!!");
+					menu.inicial();
+				}else {
 				bw.write(ra+","+nome);
 				bw.newLine();
+				}
 			}else {
 				System.out.println("!!!!Nome invalido!!!!");
 				menu.inicial();
 			}
+			
+			
 		}
 	}catch(IOException e) {
 		e.printStackTrace();
@@ -179,7 +188,27 @@ public void addNota() {
 	menu.back();
 	sc.close();
 	}
+ public  Aluno returnAluno(String id) {
+	 Aluno alu = new Aluno(id);
+	 List<Aluno> list = new ArrayList<>();
+	 try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Aluno.csv"))) {
+		
+		String itemCsv = br.readLine();
+		 Stream<String> batman = br.lines();
+	//	batman.forEach(aluno -> System.out.println(aluno));  
+		Stream<Aluno> ids = batman.map(aluno -> { 
+			 String fields[] = aluno.split(",");
+			return new Aluno(fields[0],fields[1]);
+				
+		 });
+		Stream<Aluno> alunoFiltrados = ids.filter(aluno -> aluno.equals(alu));
+		return alunoFiltrados.findFirst().get();
 
+	 }catch( IOException e){
+		 
+	 }
+		return null;
+ }
 
 
 }
