@@ -42,7 +42,7 @@ public class Menu {
 		case 6:
 			System.out.print("Digite o Ra do aluno: ");
 			String id = sc.next();
-			System.out.println(data.returnAluno(id));
+			System.out.println(data.returnHistorico(id));
 			back();
 		case 7:
 			System.out.println(System.getProperty("user.dir"));

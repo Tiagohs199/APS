@@ -4,6 +4,7 @@ public class Aluno {
 	private String id;
 	private String nome;
 	private Curso curso;
+	private Nota nota;
 	
 	public Aluno(String id) {
 		this.id = id;
@@ -13,11 +14,12 @@ public class Aluno {
 		this.id = id;
 		this.nome = nome;
 	}
-	public Aluno(String id, String nome, Curso curso) {
+	public Aluno(String id, String nome, Curso curso, Nota nota) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.curso = curso;
+		this.nota = nota;
 	}
 
 	public String getId() {
@@ -47,6 +49,10 @@ public class Aluno {
 	@Override
 	public String toString() {
 		return "Aluno - nome = " + nome+"--id = " + id  ;
+		
+		
+	
+		
 	}
 	@Override
 	public int hashCode() {

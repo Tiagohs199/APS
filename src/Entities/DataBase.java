@@ -23,6 +23,7 @@ public class DataBase {
 	}
 	
 	Menu menu = new Menu();
+	Aluno aluno;
 
 	public String destiny() {
 		
@@ -167,7 +168,7 @@ public void addNota() {
 	String curso = sc.next();
 	
 	if(verifyAluno(ra)) {
-		System.out.println("verify aluno ok"+curso);
+		System.out.println("verify aluno ok " );
 		
 		if(verifyCurso(curso)) {
 			System.out.println("verify curso ok");
@@ -179,7 +180,7 @@ public void addNota() {
 			Double rep = sc.nextDouble();
 			Double ex = sc.nextDouble();
 			
-			bw.write(ra+","+np1+","+np2+","+rep+","+ex);
+			bw.write(ra+","+curso+","+np1+","+np2+","+rep+","+ex);
 			bw.newLine();
 			
 	}catch(IOException e) {
@@ -217,8 +218,6 @@ public void addNota() {
 		} catch (IOException e) {
 			System.out.println("ERROR");
 		} catch (NoSuchElementException e) {
-			Aluno li = new Aluno("new");
-			return li;
 		}
 		return null;
 	}
@@ -288,7 +287,30 @@ public void addNota() {
 	}
  	
  	
- 	
+ 	public Nota returnHistorico(String id) {
+		Aluno alu = new Aluno(id);
+		List<Aluno> list = new ArrayList<>();
+		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Notas.csv"))) {
+
+			String itemCsv = br.readLine();
+			Stream<String> batman = br.lines();
+			
+			Stream<Nota> ids = batman.map(aluno -> {
+				String fields[] = aluno.split(",");
+				return new Nota(Double.parseDouble(fields[2]),Double.parseDouble(fields[3]),
+						Double.parseDouble(fields[4]),Double.parseDouble(fields[5]),returnCurso(fields[1]),returnAluno(fields[0]));
+
+			});
+			Stream<Nota> alunoFiltrados = ids.filter(aluno -> aluno.equals(alu));
+			return alunoFiltrados.findFirst().get();
+
+		} catch (IOException e) {
+			System.out.println("ERROR");
+		} catch (NoSuchElementException e) {
+			System.out.println("ID NOT FOUND");
+		}
+		return null;
+	}
  	
  	
  	

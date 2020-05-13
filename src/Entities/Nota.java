@@ -2,20 +2,19 @@ package Entities;
 
 public class Nota {
 	private Double NP1,NP2,exame,reposicao;
+	private Curso curso;
 	private Aluno aluno;
-	private Disciplina disciplina;
-	
 	public Nota() {
 	}
 
-	public Nota(Double nP1, Double nP2, Double exame, Double reposicao, Aluno aluno, Disciplina disciplina) {
-		super();
+	public Nota(Double nP1, Double nP2, Double exame, Double reposicao,Curso curso, Aluno aluno) {
 		NP1 = nP1;
 		NP2 = nP2;
 		this.exame = exame;
 		this.reposicao = reposicao;
+		this.curso = curso;
 		this.aluno = aluno;
-		this.disciplina = disciplina;
+		
 	}
 
 	public Double getNP1() {
@@ -62,8 +61,7 @@ public class Nota {
 
 	@Override
 	public String toString() {
-		return "Nota " + NP1 + ", NP2=" + NP2 + ", exame=" + exame + ", reposicao=" + reposicao + ", aluno="
-				+ aluno + ", disciplina=" + disciplina;
+		return "Aluno"+aluno.getId()+"nome "+aluno.getNome()+"Nota " + NP1 + ", NP2=" + NP2 + ", exame=" + exame + ", reposicao=" + reposicao;
 	}
 	
 	
