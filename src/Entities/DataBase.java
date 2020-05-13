@@ -201,15 +201,15 @@ public void addNota() {
 	
 	public Aluno returnAluno(String id) {
 		Aluno alu = new Aluno(id);
-		List<Aluno> list = new ArrayList<>();
+		
 		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Aluno.csv"))) {
 
 			String itemCsv = br.readLine();
-			Stream<String> batman = br.lines();
-			// batman.forEach(aluno -> System.out.println(aluno));
-			Stream<Aluno> ids = batman.map(aluno -> {
+			Stream<String> str = br.lines();
+			
+			Stream<Aluno> ids = str.map(aluno -> {
 				String fields[] = aluno.split(",");
-				return new Aluno(fields[0], fields[1]);
+				return new Aluno(fields[0]);
 
 			});
 			Stream<Aluno> alunoFiltrados = ids.filter(aluno -> aluno.equals(alu));
@@ -224,7 +224,7 @@ public void addNota() {
 
  	public Curso returnCurso(String curso) {
  		Curso cur =new Curso(curso);
- 		List<Curso> list = new ArrayList<>();
+ 		
  		try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Curso.csv"))) {
  			String itemCsv = br.readLine();
  			 Stream<String> str = br.lines();
@@ -233,14 +233,17 @@ public void addNota() {
  				 String fields[] = nome.split(",");
  				return new Curso(fields[0]);
  			 });
- 			Stream<Curso> alunoFiltrados = cursos.filter(nome -> nome.equals(cur));
- 			return alunoFiltrados.findFirst().get();
+ 			Stream<Curso> cursoFiltrados = cursos.filter(nome -> nome.equals(cur));
+ 			return cursoFiltrados.findFirst().get();
  			
  				
  			
  		}catch( IOException e) {
- 			
- 		}return null;
+ 			System.out.println("ERROR");
+		} catch (NoSuchElementException e) {
+			System.out.println("Not found");
+		}
+ 		return null;
  	}
  	
  	
@@ -287,29 +290,31 @@ public void addNota() {
 	}
  	
  	
- 	public Nota returnHistorico(String id) {
-		Aluno alu = new Aluno(id);
-		List<Aluno> list = new ArrayList<>();
-		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Notas.csv"))) {
+ 	public List<Nota> returnHistorico(String id) {
+ 		List<Nota> list = new ArrayList<>();
+ 		try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Notas.csv"))) {
+ 			br.readLine();
+ 			String itemCsv = br.readLine();
+ 			
+ 			while (itemCsv != null) {
 
-			String itemCsv = br.readLine();
-			Stream<String> batman = br.lines();
-			
-			Stream<Nota> ids = batman.map(aluno -> {
-				String fields[] = aluno.split(",");
-				return new Nota(Double.parseDouble(fields[2]),Double.parseDouble(fields[3]),
-						Double.parseDouble(fields[4]),Double.parseDouble(fields[5]),returnCurso(fields[1]),returnAluno(fields[0]));
-
-			});
-			Stream<Nota> alunoFiltrados = ids.filter(aluno -> aluno.equals(alu));
-			return alunoFiltrados.findFirst().get();
-
-		} catch (IOException e) {
-			System.out.println("ERROR");
-		} catch (NoSuchElementException e) {
-			System.out.println("ID NOT FOUND");
-		}
-		return null;
+ 				String fields[] = itemCsv.split(",");
+ 			
+ 				String ra = fields[0];
+ 				String curso = fields[1];
+ 				Double np1 = Double.parseDouble(fields[2]);
+ 				Double np2 =  Double.parseDouble(fields[3]);
+ 				Double rep =  Double.parseDouble(fields[4]);
+ 				Double ex =  Double.parseDouble(fields[5]);;
+ 				
+ 				list.add(new Nota(np1,np2,ex,rep,returnCurso(curso),returnAluno(ra)));
+ 				itemCsv = br.readLine();
+ 			}
+ 			return list;
+ 		}catch (IOException e) {
+ 			e.printStackTrace();
+ 		}
+ 		return null;
 	}
  	
  	

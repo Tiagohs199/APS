@@ -42,10 +42,16 @@ public class Menu {
 		case 6:
 			System.out.print("Digite o Ra do aluno: ");
 			String id = sc.next();
-			System.out.println(data.returnHistorico(id));
+			List<Nota> listNota = data.returnHistorico(id);
+			listNota.forEach(nota -> System.out.println(nota));
 			back();
 		case 7:
-			System.out.println(System.getProperty("user.dir"));
+			String curso = sc.next();
+			System.out.println(data.returnCurso(curso));
+			//System.out.println(System.getProperty("user.dir"));
+		case 8:
+			String aluno = sc.next();
+			System.out.println(data.returnAluno(aluno));
 		case 0:
 			System.exit(0);
 		}

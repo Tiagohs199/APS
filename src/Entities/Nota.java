@@ -7,6 +7,12 @@ public class Nota {
 	public Nota() {
 	}
 
+	public Nota(Aluno aluno) {
+		this.aluno = aluno;
+	}
+	
+	
+	
 	public Nota(Double nP1, Double nP2, Double exame, Double reposicao,Curso curso, Aluno aluno) {
 		NP1 = nP1;
 		NP2 = nP2;
