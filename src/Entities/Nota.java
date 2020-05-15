@@ -1,28 +1,27 @@
 package Entities;
 
-public class Nota {
+public class Nota  extends Aluno{
 	private Double NP1,NP2,exame,reposicao;
 	private Curso curso;
 	private Aluno aluno;
-	public Nota() {
-	}
-
-	public Nota(Aluno aluno) {
-		this.aluno = aluno;
-	}
+	
+		
 	
 	
 	
-	public Nota(Double nP1, Double nP2, Double exame, Double reposicao,Curso curso, Aluno aluno) {
+	
+	
+	
+	
+	
+	public Nota(Double nP1, Double nP2, Double exame, Double reposicao,String id, Curso cursos) {
+		super(id);
 		NP1 = nP1;
 		NP2 = nP2;
 		this.exame = exame;
 		this.reposicao = reposicao;
-		this.curso = curso;
-		this.aluno = aluno;
 		
 	}
-
 	public Double getNP1() {
 		return NP1;
 	}
@@ -67,7 +66,7 @@ public class Nota {
 
 	@Override
 	public String toString() {
-		return "Aluno"+aluno.getId()+"nome "+aluno.getNome()+"Nota " + NP1 + ", NP2=" + NP2 + ", exame=" + exame + ", reposicao=" + reposicao;
+		return "Aluno: Id = "+aluno.getId()+" Nome: "+aluno.getNome()+" Curso ="+curso+" Nota1 = " + NP1 + " Nota2 =" + NP2 + " Exame = " + exame + " Reposicao = " + reposicao;
 	}
 	
 	

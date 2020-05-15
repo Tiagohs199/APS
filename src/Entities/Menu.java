@@ -18,6 +18,7 @@ public class Menu {
 				          +"--Consulta Cursos--(5)%n"
 				          +"--Consulta Id aluno--(6)%n"
 				          +"--Disciplina--(7)%n"
+				          +"--COnsulta todas as notas(9)--%n"
 				          +"--Sair--(0)");
 
 		int n = sc.nextInt();
@@ -47,11 +48,15 @@ public class Menu {
 			back();
 		case 7:
 			String curso = sc.next();
-			System.out.println(data.returnCurso(curso));
+			System.out.println(data.verifyCurso(curso));
 			//System.out.println(System.getProperty("user.dir"));
 		case 8:
 			String aluno = sc.next();
-			System.out.println(data.returnAluno(aluno));
+			System.out.println(data.returnCurso(aluno));
+		case 9:
+			List<Nota> lisNo = data.getAllNota();
+			lisNo.forEach(nota -> System.out.println(nota));
+			back();
 		case 0:
 			System.exit(0);
 		}

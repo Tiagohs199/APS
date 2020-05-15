@@ -159,44 +159,44 @@ public class DataBase {
 	}return null;
 	}
 	
-public void addNota() {
-	Scanner sc = new Scanner(System.in);
-	System.out.println("-----------------------");
-	
-	System.out.print("Digite o ra e o curso do aluno: ");
-	String ra = sc.next();
-	String curso = sc.next();
-	
-	if(verifyAluno(ra)) {
-		System.out.println("verify aluno ok " );
-		
-		if(verifyCurso(curso)) {
-			System.out.println("verify curso ok");
-	try(BufferedWriter bw = new BufferedWriter(new FileWriter(destiny() + "\\Database\\Notas.csv",true))){
-			
-			System.out.print("Digite as notas (NP1,NP2,REP,EX)");
-			Double np1 = sc.nextDouble();
-			Double np2 = sc.nextDouble();
-			Double rep = sc.nextDouble();
-			Double ex = sc.nextDouble();
-			
-			bw.write(ra+","+curso+","+np1+","+np2+","+rep+","+ex);
-			bw.newLine();
-			
-	}catch(IOException e) {
-		e.printStackTrace();
-		System.out.println("Lista vazia");
+	public void addNota() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("-----------------------");
+
+		System.out.print("Digite o ra e o curso do aluno: ");
+		String ra = sc.next();
+		String curso = sc.next();
+
+		if (verifyAluno(ra)) {
+			System.out.println("verify aluno ok ");
+
+			if (verifyCurso(curso)) {
+				System.out.println("verify curso ok");
+				try (BufferedWriter bw = new BufferedWriter(
+						new FileWriter(destiny() + "\\Database\\Notas.csv", true))) {
+
+					System.out.print("Digite as notas (NP1,NP2,REP,EX)");
+					Double np1 = sc.nextDouble();
+					Double np2 = sc.nextDouble();
+					Double rep = sc.nextDouble();
+					Double ex = sc.nextDouble();
+
+					bw.write(ra + "," + curso + "," + np1 + "," + np2 + "," + rep + "," + ex);
+					bw.newLine();
+
+				} catch (IOException e) {
+					e.printStackTrace();
+					System.out.println("Lista vazia");
+				} catch (NoSuchElementException e) {
+					System.out.println("!!!Curso inexsistente!!!");
+				}
+				System.out.println("Adicionado com sucesso!!");
+				menu.back();
+				sc.close();
+			}
+		} else {
+			System.out.println("!!!Usuario inexistente!!!");
 		}
-	catch(NoSuchElementException e) {
-		System.out.println("!!!Curso inexsistente!!!");
-	}
-	System.out.println("Adicionado com sucesso!!");
-	menu.back();
-	sc.close();
-		}	
-	}else {
-		System.out.println("!!!Usuario inexistente!!!");
-	}
 	}
 	
 	public Aluno returnAluno(String id) {
@@ -209,7 +209,7 @@ public void addNota() {
 			
 			Stream<Aluno> ids = str.map(aluno -> {
 				String fields[] = aluno.split(",");
-				return new Aluno(fields[0]);
+				return new Aluno(fields[0],fields[1]);
 
 			});
 			Stream<Aluno> alunoFiltrados = ids.filter(aluno -> aluno.equals(alu));
@@ -297,7 +297,7 @@ public void addNota() {
  			String itemCsv = br.readLine();
  			
  			while (itemCsv != null) {
-
+ 			Aluno aluno = null;
  				String fields[] = itemCsv.split(",");
  			
  				String ra = fields[0];
@@ -307,8 +307,12 @@ public void addNota() {
  				Double rep =  Double.parseDouble(fields[4]);
  				Double ex =  Double.parseDouble(fields[5]);;
  				
- 				list.add(new Nota(np1,np2,ex,rep,returnCurso(curso),returnAluno(ra)));
+ 				if(verifyValida(id)) {
+ 				  aluno =returnAluno(id);
+ 				
+ 				list.add(new Nota(np1,np2,ex,rep,ra,new Curso(curso)) );
  				itemCsv = br.readLine();
+ 				}
  			}
  			return list;
  		}catch (IOException e) {
@@ -318,15 +322,55 @@ public void addNota() {
 	}
  	
  	
+
+ 	public boolean verifyValida(String id) {	
+		List<String> list = new ArrayList<String>();
+		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Notas.csv"))) {
+
+			br.readLine();
+			String line;
+			while((line = br.readLine()) != null) {
+				
+				list.add(line.split(",")[0]);
+			}
+			return list.contains(id);
+		} catch (IOException e) {
+			System.out.println("ERROR");
+		} catch (NoSuchElementException e) {
+			
+		}
+		return false;
+	}
  	
  	
  	
- 	
- 	
- 	
- 	
- 	
- 	
+ 	public List<Nota> getAllNota() {
+		
+		List<Nota> list = new ArrayList<>();
+	try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Notas.csv"))) {
+		br.readLine();
+		String itemCsv = br.readLine();
+		
+		while (itemCsv != null) {
+
+			String fields[] = itemCsv.split(",");
+		
+			String ra = fields[0];
+			String curso = fields[1];
+			Double np1 = Double.parseDouble(fields[2]);
+			Double np2 =  Double.parseDouble(fields[3]);
+			Double rep =  Double.parseDouble(fields[4]);
+			Double ex =  Double.parseDouble(fields[5]);;
+			
+			list.add(new Nota(np1,np2,ex,rep,ra,new Curso(curso)));
+			itemCsv = br.readLine();
+			
+		}
+		return list;
+	}catch (IOException e) {
+		e.printStackTrace();
+	}return null;
+	}
  	
  	
  	
