@@ -51,13 +51,16 @@ public class Menu {
 			System.out.println(data.verifyCurso(curso));
 			//System.out.println(System.getProperty("user.dir"));
 		case 8:
-			String aluno = sc.next();
-			System.out.println(data.returnCurso(aluno));
-		case 9:
-			List<Nota> lisNo = data.getAllNota();
-			lisNo.forEach(nota -> System.out.println(nota));
+			System.out.print("Digite o Curso: ");
+			String cur = sc.next();
+			System.out.println(data.returnCurso(cur));
 			back();
-		case 0:
+		case 9:
+			System.out.print("Digite o Ra do aluno: ");
+			String ra = sc.next();
+			System.out.println(data.returnAluno(ra));
+			back();
+			case 0:
 			System.exit(0);
 		}
 	

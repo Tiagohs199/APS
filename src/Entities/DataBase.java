@@ -226,17 +226,16 @@ public class DataBase {
  		Curso cur =new Curso(curso);
  		
  		try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Curso.csv"))) {
- 			String itemCsv = br.readLine();
+ 			//String itemCsv = br.readLine();
  			 Stream<String> str = br.lines();
  	
  			Stream<Curso> cursos = str.map(nome -> { 
  				 String fields[] = nome.split(",");
  				return new Curso(fields[0]);
  			 });
+ 			
  			Stream<Curso> cursoFiltrados = cursos.filter(nome -> nome.equals(cur));
  			return cursoFiltrados.findFirst().get();
- 			
- 				
  			
  		}catch( IOException e) {
  			System.out.println("ERROR");
@@ -344,33 +343,7 @@ public class DataBase {
  	
  	
  	
- 	public List<Nota> getAllNota() {
-		
-		List<Nota> list = new ArrayList<>();
-	try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Notas.csv"))) {
-		br.readLine();
-		String itemCsv = br.readLine();
-		
-		while (itemCsv != null) {
-
-			String fields[] = itemCsv.split(",");
-		
-			String ra = fields[0];
-			String curso = fields[1];
-			Double np1 = Double.parseDouble(fields[2]);
-			Double np2 =  Double.parseDouble(fields[3]);
-			Double rep =  Double.parseDouble(fields[4]);
-			Double ex =  Double.parseDouble(fields[5]);;
-			
-			list.add(new Nota(np1,np2,ex,rep,ra,new Curso(curso)));
-			itemCsv = br.readLine();
-			
-		}
-		return list;
-	}catch (IOException e) {
-		e.printStackTrace();
-	}return null;
-	}
+ 	
  	
  	
  	
