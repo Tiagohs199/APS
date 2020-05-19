@@ -10,6 +10,7 @@ public class Curso {
 	private String nome;
 	private Nivel nivel;
 	private Date ano;
+	
 	private List<Double> notas;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 	
@@ -17,12 +18,11 @@ public class Curso {
 		this.nome = nome;
 	}
 	public Curso(String nome, Nivel nivel) {
-		super();
 		this.nome = nome;
 		this.nivel = nivel;
 	}
 	public Curso(String nome, Nivel nivel, Date ano) {
-		super();
+		
 		this.nome = nome;
 		this.nivel = nivel;
 		this.ano = ano;
@@ -31,30 +31,24 @@ public class Curso {
 	public String getCurso() {
 		return nome;
 	}
-
-	public void setCurso(String nome) {
-		this.nome = nome;
-	}
-
 	public Nivel getNivel() {
 		return nivel;
 	}
-
-	public void setNivel(Nivel nivel) {
-		this.nivel = nivel;
-	}
-
 	public Date getAno() {
 		return ano;
 	}
-
-	public void setAno(Date ano) {
-		this.ano = ano;
+	public List<Double> getNotas() {
+		return notas;
 	}
-
+	public void setNotas(List<Double> notas) {
+		this.notas = notas;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
-		return "Curso =" + nome + ", nivel = " + nivel + ", ano = " + sdf.format(ano);
+		return "Curso =" + nome + ", nivel = " + getNivel()+" Date ="+sdf.format(getAno());
 	}
 
 	@Override

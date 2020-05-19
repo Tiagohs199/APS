@@ -43,6 +43,8 @@ public class Menu {
 		case 6:
 			System.out.print("Digite o Ra do aluno: ");
 			String id = sc.next();
+			//Nota retu = data.returnHistorico(id);
+			//System.out.println(retu);
 			List<Nota> listNota = data.returnHistorico(id);
 			listNota.forEach(nota -> System.out.println(nota));
 			back();
@@ -53,7 +55,7 @@ public class Menu {
 		case 8:
 			System.out.print("Digite o Curso: ");
 			String cur = sc.next();
-			System.out.println(data.returnCurso(cur.toUpperCase()));
+			System.out.println(data.returnCurso(cur));
 			back();
 		case 9:
 			System.out.print("Digite o Ra do aluno: ");

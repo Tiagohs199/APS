@@ -232,10 +232,10 @@ public class DataBase {
  		try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Curso.csv"))) {
  			//String itemCsv = br.readLine();
  			 Stream<String> str = br.lines();
- 			 Date date;
+ 			
  			Stream<Curso> cursos = str.map(nome -> { 
- 				 String fields[] = nome.split(",");
- 				return new Curso(fields[0]);
+ 				 String fields[] = nome.split(",");String nivel = fields[1];
+ 				return new Curso(fields[0], Nivel.valueOf(nivel));
  			 });
  			
  			Stream<Curso> cursoFiltrados = cursos.filter(nome -> nome.equals(cur));
@@ -251,10 +251,59 @@ public class DataBase {
  		return null;
  	}
  	
+ 	public List<Nota> returnHistorico(String id) {
+ 		List<Nota> list = new ArrayList<>();
+ 		try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Notas.csv"))) {
+ 			br.readLine();
+ 			String itemCsv = br.readLine();
+ 			
+ 			while (itemCsv != null) {
+ 			
+ 				String fields[] = itemCsv.split(",");
+ 			
+ 				String ra = fields[0];
+ 				String curso = fields[1];
+ 				Double np1 = Double.parseDouble(fields[2]);
+ 				Double np2 =  Double.parseDouble(fields[3]);
+ 				Double rep =  Double.parseDouble(fields[4]);
+ 				Double ex =  Double.parseDouble(fields[5]);;
+ 				
+ 				if(verifyValida(id)) {
+ 				  
+ 				
+ 				list.add(new Nota(np1,np2,ex,rep,returnCurso(curso),returnAluno(ra)));
+ 				
+ 				
+ 				itemCsv = br.readLine();
+ 				}
+ 			}
+ 			return list;
+ 		}catch (IOException e) {
+ 			e.printStackTrace();
+ 		}
+ 		return null;
+	}
  	
  	
- 	
- 	
+
+ 	public boolean verifyValida(String id) {	
+		List<String> list = new ArrayList<String>();
+		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Notas.csv"))) {
+
+			br.readLine();
+			String line;
+			while((line = br.readLine()) != null) {
+				
+				list.add(line.split(",")[0]);
+			}
+			return list.contains(id);
+		} catch (IOException e) {
+			System.out.println("ERROR");
+		} catch (NoSuchElementException e) {
+			
+		}
+		return false;
+	}
  	public boolean verifyAluno(String id) {	
 		List<String> list = new ArrayList<String>();
 		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Aluno.csv"))) {
@@ -293,60 +342,6 @@ public class DataBase {
 		}
 		return false;
 	}
- 	
- 	
- 	public List<Nota> returnHistorico(String id) {
- 		List<Nota> list = new ArrayList<>();
- 		try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Notas.csv"))) {
- 			br.readLine();
- 			String itemCsv = br.readLine();
- 			
- 			while (itemCsv != null) {
- 			Aluno aluno = null;
- 				String fields[] = itemCsv.split(",");
- 			
- 				String ra = fields[0];
- 				String curso = fields[1];
- 				Double np1 = Double.parseDouble(fields[2]);
- 				Double np2 =  Double.parseDouble(fields[3]);
- 				Double rep =  Double.parseDouble(fields[4]);
- 				Double ex =  Double.parseDouble(fields[5]);;
- 				
- 				if(verifyValida(id)) {
- 				  aluno =returnAluno(id);
- 				
- 				list.add(new Nota(np1,np2,ex,rep,ra,new Curso(curso)) );
- 				itemCsv = br.readLine();
- 				}
- 			}
- 			return list;
- 		}catch (IOException e) {
- 			e.printStackTrace();
- 		}
- 		return null;
-	}
- 	
- 	
-
- 	public boolean verifyValida(String id) {	
-		List<String> list = new ArrayList<String>();
-		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Notas.csv"))) {
-
-			br.readLine();
-			String line;
-			while((line = br.readLine()) != null) {
-				
-				list.add(line.split(",")[0]);
-			}
-			return list.contains(id);
-		} catch (IOException e) {
-			System.out.println("ERROR");
-		} catch (NoSuchElementException e) {
-			
-		}
-		return false;
-	}
- 	
  	
  	
  	

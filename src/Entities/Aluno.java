@@ -16,12 +16,13 @@ public class Aluno {
 		this.id = id;
 		this.nome = nome;
 	}
-	public Aluno(String id, String nome, Curso curso) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		
-		
+	
+	public List<Curso> getCurso() {
+		return curso;
+	}
+
+	public void setCurso(List<Curso> curso) {
+		this.curso = curso;
 	}
 
 	public String getId() {
@@ -31,6 +32,9 @@ public class Aluno {
 		return nome;
 	}
 	
+	public String toString1() {
+		return "Aluno ="+nome+"Cursos ="+getCurso();
+	}
 
 
 	@Override
