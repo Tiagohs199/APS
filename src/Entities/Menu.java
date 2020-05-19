@@ -53,7 +53,7 @@ public class Menu {
 		case 8:
 			System.out.print("Digite o Curso: ");
 			String cur = sc.next();
-			System.out.println(data.returnCurso(cur));
+			System.out.println(data.returnCurso(cur.toUpperCase()));
 			back();
 		case 9:
 			System.out.print("Digite o Ra do aluno: ");

@@ -8,12 +8,6 @@ public class Nota  extends Aluno{
 		
 	
 	
-	
-	
-	
-	
-	
-	
 	public Nota(Double nP1, Double nP2, Double exame, Double reposicao,String id, Curso cursos) {
 		super(id);
 		NP1 = nP1;

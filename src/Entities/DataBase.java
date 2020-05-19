@@ -52,7 +52,7 @@ public class DataBase {
 				
 				if (nome.matches("[A-Za-z]*")) {
 					if(!verifyAluno(ra)) {
-						bw.write(ra + "," + nome);
+						bw.write(ra + "," + (Character.toUpperCase(nome.charAt(0))+nome.substring(1)));  // Character.toUpperCase(string.charAt(0)) + string.substring(1);
 						bw.newLine();
 					}else {
 						System.out.println("!!!Ra ja cadastrado!!!");
@@ -109,10 +109,13 @@ public class DataBase {
 			String nome = sc.next();
 			String tipo = sc.next();
 			Date ano = sdf.parse(sc.next());
-			
-			bw.write(nome+","+Nivel.valueOf(tipo)+","+sdf.format(ano));
-			bw.newLine();
-				
+			if(nome.matches("[A-Za-z]*")) {
+				bw.write(nome.toUpperCase()+","+Nivel.valueOf(tipo.toUpperCase())+","+sdf.format(ano));
+				bw.newLine();
+				System.out.println("Adicionado com sucesso!!");
+		}else {
+			System.out.println("!!!Nome de curso invalido!!!");
+		}
 			
 		}catch(DomainException e) {
 			e.printStackTrace();
@@ -120,14 +123,13 @@ public class DataBase {
 			}catch (IOException e) {
 				e.printStackTrace();
 			}catch (ParseException e) {
-				e.printStackTrace();
+				System.out.println("!!!O ano deve ser apenas numeros!!!");
 			}catch(IllegalArgumentException e) {
 				System.out.println("-------------------");
 				System.out.println("!!!!Argumento invalido!!!!");
 				System.out.println("-------------------");
 				menu.inicial();
 			}
-		System.out.println("Adicionado com sucesso!!");
 		menu.back();
 		sc.close();
 		
@@ -170,7 +172,7 @@ public class DataBase {
 		if (verifyAluno(ra)) {
 			System.out.println("verify aluno ok ");
 
-			if (verifyCurso(curso)) {
+			if (verifyCurso(curso.toUpperCase())) {
 				System.out.println("verify curso ok");
 				try (BufferedWriter bw = new BufferedWriter(
 						new FileWriter(destiny() + "\\Database\\Notas.csv", true))) {
@@ -181,7 +183,7 @@ public class DataBase {
 					Double rep = sc.nextDouble();
 					Double ex = sc.nextDouble();
 
-					bw.write(ra + "," + curso + "," + np1 + "," + np2 + "," + rep + "," + ex);
+					bw.write(ra.toUpperCase() + "," + curso.toUpperCase() + "," + np1 + "," + np2 + "," + rep + "," + ex);
 					bw.newLine();
 
 				} catch (IOException e) {
@@ -193,6 +195,8 @@ public class DataBase {
 				System.out.println("Adicionado com sucesso!!");
 				menu.back();
 				sc.close();
+			}else {
+				System.out.println("!!!Curso inexistente!!!");
 			}
 		} else {
 			System.out.println("!!!Usuario inexistente!!!");
@@ -224,11 +228,11 @@ public class DataBase {
 
  	public Curso returnCurso(String curso) {
  		Curso cur =new Curso(curso);
- 		
+ 		 SimpleDateFormat sdf =new SimpleDateFormat("dd/MM/yyyy");
  		try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Curso.csv"))) {
  			//String itemCsv = br.readLine();
  			 Stream<String> str = br.lines();
- 	
+ 			 Date date;
  			Stream<Curso> cursos = str.map(nome -> { 
  				 String fields[] = nome.split(",");
  				return new Curso(fields[0]);
@@ -241,6 +245,8 @@ public class DataBase {
  			System.out.println("ERROR");
 		} catch (NoSuchElementException e) {
 			System.out.println("Not found");
+		}catch (NullPointerException e) {
+			e.printStackTrace();
 		}
  		return null;
  	}
