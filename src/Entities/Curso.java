@@ -9,7 +9,7 @@ import Entities.enums.Nivel;
 public class Curso {
 	private String nome;
 	private Nivel nivel;
-	private Date ano;
+	private String ano;
 	
 	private List<Double> notas;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
@@ -21,7 +21,7 @@ public class Curso {
 		this.nome = nome;
 		this.nivel = nivel;
 	}
-	public Curso(String nome, Nivel nivel, Date ano) {
+	public Curso(String nome, Nivel nivel, String ano) {
 		
 		this.nome = nome;
 		this.nivel = nivel;
@@ -34,7 +34,7 @@ public class Curso {
 	public Nivel getNivel() {
 		return nivel;
 	}
-	public Date getAno() {
+	public String getAno() {
 		return ano;
 	}
 	public List<Double> getNotas() {
@@ -48,7 +48,7 @@ public class Curso {
 	
 	@Override
 	public String toString() {
-		return "Curso =" + nome + ", nivel = " + getNivel()+" Date ="+sdf.format(getAno());
+		return "Curso =" + nome + ", nivel = "+ getNivel()+" Date ="+getAno();
 	}
 
 	@Override
