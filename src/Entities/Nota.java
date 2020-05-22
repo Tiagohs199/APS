@@ -79,7 +79,7 @@ public class Nota{
 			 refer = 5;
 		}
 		Double media = ((NP1 + NP2) / 2);
-		if (media >= 7) {
+		if (media >= refer) {
 			return true;
 		}else if (((media + exame) / 2) >= 5) {
 			return true;	
@@ -112,13 +112,14 @@ public class Nota{
 			}
 			if(NP1.equals(NP2)) {
 				
-				media =((NP2+reposicao)/2);
+				media =(NP2+reposicao)/2;
 				if (media >= 7) {
 					return media;
-				}else{
-					double ex =(media+exame)/2;
-					
-					return ex;	
+				}else if (exame != 0) {
+					media =(media + exame)/2;
+					return media;	
+				}else {
+					return media;
 				}
 			}
 		}else {
@@ -126,8 +127,11 @@ public class Nota{
 		
 		if (media >= 7) {
 			return media;
-		}else if (((media + exame) / 2) >= 5) {
+		}else if (exame != 0) {
+			media =(media + exame)/2;
 			return media;	
+		}else if(media >= 5) {
+			return media;
 		}
 		}
 		return 0.0;

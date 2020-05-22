@@ -351,9 +351,11 @@ public class DataBase {
 			while((line = br.readLine()) != null) {
 				
 				list.add(line.split(",")[0]);
+				
 			
 			}
 			return list.contains(id);
+			
 		} catch (IOException e) {
 			System.out.println("ERROR");
 		} catch (NoSuchElementException e) {

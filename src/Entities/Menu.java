@@ -1,5 +1,6 @@
 package Entities;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,6 +11,7 @@ public class Menu {
 	public void inicial() {
 		DataBase data = new DataBase();
 		Scanner sc = new Scanner(System.in);
+		try {
 		System.out.printf("---Menu inicial---%n"
 				          +"--Add Aluno--(1)%n"
 				          +"--Add Curso--(2)%n"
@@ -55,16 +57,20 @@ public class Menu {
 			System.exit(0);
 		}
 	
-		
+		}catch (InputMismatchException e) {
+			System.out.println("!!Valor invalido!!");
+		}
 		
 		
 		sc.close();
 	}
 	
+	
 	public void back() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("---------------------");
-		System.out.println("Deseja voltar ao Menu inicial? (y/n)");
+		System.out.println("Deseja voltar ao Menu inicial? (y) "
+				+ "ou qualquer tecla para sair");
 		char c = sc.next().charAt(0);
 		if(c == 'y' || c == 'Y') {
 		inicial();
@@ -72,4 +78,5 @@ public class Menu {
 			System.exit(0);
 		}
 	}
+	
 }
