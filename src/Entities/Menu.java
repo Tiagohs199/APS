@@ -53,6 +53,11 @@ public class Menu {
 			List<Nota> listCur = data.returnHistoricoCurso(cur);
 			listCur.forEach(nota -> System.out.println(nota));
 			back();
+		case 9 :
+			System.out.print("Digite o Ra do aluno: ");
+			String id1 = sc.next();
+			String id2 = sc.next();
+			System.out.println(data.verifyNota1(id1,id2));
 		case 0:
 			System.exit(0);
 		}

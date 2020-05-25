@@ -172,7 +172,9 @@ public class DataBase {
 
 			if (verifyCurso(curso.toUpperCase())) {
 				System.out.println("verify curso ok");
-				if(!(verifyNota(ra) && verifyNota1(curso.toUpperCase()))) {
+				
+				if(!(verifyNota1(ra,curso.toUpperCase()))) {
+					
 				try (BufferedWriter bw = new BufferedWriter(
 						new FileWriter(destiny() + "\\Database\\Notas.csv", true))) {
 
@@ -270,7 +272,7 @@ public class DataBase {
  				Double rep =  Double.parseDouble(fields[4]);
  				Double ex =  Double.parseDouble(fields[5]);;
  				
- 				if(ra.equals(id) && verifyNota1(curso.toUpperCase())) {
+ 				if(ra.equals(id) && verifyNota(curso.toUpperCase())) {
  				  
  					list.add(new Nota(np1,np2,ex,rep,returnCurso(curso),returnAluno(ra)));
  					itemCsv = br.readLine();
@@ -285,7 +287,38 @@ public class DataBase {
  		
  		return null;
 	}
- 	
+ 	public List<Nota> returnHistoricoCurso(String id) {
+ 		List<Nota> list = new ArrayList<>();
+ 		try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Notas.csv"))) {
+ 			br.readLine();
+ 			String itemCsv = br.readLine();
+ 			
+ 			while (itemCsv != null) {
+ 			
+ 				String fields[] = itemCsv.split(",");
+ 			
+ 				String ra = fields[0];
+ 				String curso = fields[1];
+ 				Double np1 = Double.parseDouble(fields[2]);
+ 				Double np2 =  Double.parseDouble(fields[3]);
+ 				Double rep =  Double.parseDouble(fields[4]);
+ 				Double ex =  Double.parseDouble(fields[5]);;
+ 				
+ 				if(verifyValida(ra) && curso.equals(id.toUpperCase())) {
+ 				  
+ 					list.add(new Nota(np1,np2,ex,rep,returnCurso(curso),returnAluno(ra)));
+ 					itemCsv = br.readLine();
+ 				}else {
+ 					itemCsv = br.readLine();
+ 				}
+ 			}
+ 			return list;
+ 		}catch (IOException e) {
+ 			e.printStackTrace();
+ 		}
+ 		
+ 		return null;
+	}
  	public boolean verifyValida(String id) {	
 		List<String> list = new ArrayList<String>();
 		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Notas.csv"))) {
@@ -350,7 +383,7 @@ public class DataBase {
 			String line;
 			while((line = br.readLine()) != null) {
 				
-				list.add(line.split(",")[0]);
+				list.add(line.split(",")[1]);
 				
 			
 			}
@@ -363,7 +396,7 @@ public class DataBase {
 		}
 		return false;
 	}
- 	public boolean verifyNota1(String id) {	
+ 	public boolean verifyNota1(String id, String id2) {	
 		List<String> list = new ArrayList<String>();
 		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Notas.csv"))) {
 
@@ -371,10 +404,12 @@ public class DataBase {
 			String line;
 			while((line = br.readLine()) != null) {
 				
-				list.add(line.split(",")[1]);
-			
-			}
-			return list.contains(id);
+			String ra = line.split(",")[0];
+			String curso = line.split(",")[1];
+			if(ra.equals(id) && curso.equals(id2)) {
+					return true;
+				}
+			}	
 		} catch (IOException e) {
 			System.out.println("ERROR");
 		} catch (NoSuchElementException e) {
@@ -382,42 +417,4 @@ public class DataBase {
 		}
 		return false;
 	}
- 	public List<Nota> returnHistoricoCurso(String id) {
- 		List<Nota> list = new ArrayList<>();
- 		try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Notas.csv"))) {
- 			br.readLine();
- 			String itemCsv = br.readLine();
- 			
- 			while (itemCsv != null) {
- 			
- 				String fields[] = itemCsv.split(",");
- 			
- 				String ra = fields[0];
- 				String curso = fields[1];
- 				Double np1 = Double.parseDouble(fields[2]);
- 				Double np2 =  Double.parseDouble(fields[3]);
- 				Double rep =  Double.parseDouble(fields[4]);
- 				Double ex =  Double.parseDouble(fields[5]);;
- 				
- 				if(verifyNota(ra) && curso.equals(id.toUpperCase())) {
- 				  
- 					list.add(new Nota(np1,np2,ex,rep,returnCurso(curso),returnAluno(ra)));
- 					itemCsv = br.readLine();
- 				}else {
- 					itemCsv = br.readLine();
- 				}
- 			}
- 			return list;
- 		}catch (IOException e) {
- 			e.printStackTrace();
- 		}
- 		
- 		return null;
-	}
- 	
- 	
- 	
- 	
- 	
-
 }
