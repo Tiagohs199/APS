@@ -19,25 +19,19 @@ import java.util.stream.Stream;
 import Entities.enums.Nivel;
 
 public class DataBase {
-	
 	public DataBase() {
 	}
-	
 	Menu menu = new Menu();
 	Aluno aluno;
 
-	public String destiny() {
+	public String destiny() {	
 		
 		String path = System.getProperty("user.dir")+"\\src";
 		File sourceFile = new File(path);
 		String sourceFolderStr = sourceFile.getParent();
-		
 		boolean success = new File(sourceFolderStr + "\\Database").mkdir();
-
 		return sourceFolderStr;
 	}
-	
-	
 	
 	public void addAluno() {
 		Scanner sc = new Scanner(System.in);
@@ -53,7 +47,7 @@ public class DataBase {
 				
 				if (nome.matches("[A-Za-z]*")) {
 					if(!verifyAluno(ra)) {
-						bw.write(ra + "," + (Character.toUpperCase(nome.charAt(0))+nome.substring(1)));  // Character.toUpperCase(string.charAt(0)) + string.substring(1);
+						bw.write(ra + "," + (Character.toUpperCase(nome.charAt(0))+nome.substring(1)));  
 						bw.newLine();
 					}else {
 						System.out.println("!!!Ra ja cadastrado!!!");
@@ -63,7 +57,6 @@ public class DataBase {
 					System.out.println("!!!!Nome invalido!!!!");
 					menu.inicial();
 				}
-
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -77,13 +70,11 @@ public class DataBase {
 	public List<Aluno> getAllAluno() {
 		List<Aluno> list = new ArrayList<>();
 	try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Aluno.csv"))) {
-		br.readLine();
+		br.readLine(); //le a primeira linha que é o cabeçalho
 		String itemCsv = br.readLine();
 		
 		while (itemCsv != null) {
-
 			String fields[] = itemCsv.split(",");
-		
 			String ra = fields[0];
 			String name = fields[1];
 			
@@ -97,46 +88,41 @@ public class DataBase {
 	return null;
 	}
 	
-	public void addCurso() {
-		
+	public void addCurso() {	
 		Scanner sc = new Scanner(System.in);
 		System.out.println("-----------------------");
 		
-	
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(destiny()+ "\\Database\\Curso.csv",true))){
-			
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(destiny()+ "\\Database\\Curso.csv",true))){	
 			System.out.print("Digite o nome do curso, tipo e ano: ");
 			String nome = sc.next();
 			String tipo = sc.next();
 			int ano = sc.nextInt();
+			
 			if(nome.matches("[A-Za-z]*")) {
 				bw.write(nome.toUpperCase()+","+Nivel.valueOf(tipo.toUpperCase())+","+ano);
 				bw.newLine();
 				System.out.println("Adicionado com sucesso!!");
 		}else {
 			System.out.println("!!!Nome de curso invalido!!!");
-		}
-			
+		}	
 		}catch(DomainException e) {
 			e.printStackTrace();
-			System.out.println("Lista vazia");
+			System.out.println("!!!Lista vazia!!!");
 			}catch (IOException e) {
 				e.printStackTrace();
 			}catch(IllegalArgumentException e) {
-				System.out.println("-------------------");
-				System.out.println("!!!!Argumento invalido!!!!");
-				System.out.println("-------------------");
+				System.out.println("!!!Argumento invalido!!!");
 				menu.inicial();
 			}catch (InputMismatchException e) {
-				System.out.println("!!Ano deve conter apenas numeros!!");
+				System.out.println("!!!Ano deve conter apenas numeros!!!");
 			}
 		menu.back();
 		sc.close();
-		
 	}
+	
 	public List<Curso> getAllCurso() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		List<Curso> list = new ArrayList<>();
+		
 	try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Curso.csv"))) {
 		br.readLine();
 		String itemCsv = br.readLine();
@@ -144,7 +130,6 @@ public class DataBase {
 		while (itemCsv != null) {
 
 			String fields[] = itemCsv.split(",");
-		
 			String nome = fields[0];
 			String nivel = fields[1];
 			String date = fields[2];
@@ -162,22 +147,16 @@ public class DataBase {
 	public void addNota() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("-----------------------");
-
 		System.out.print("Digite o ra e o curso do aluno: ");
 		String ra = sc.next();
 		String curso = sc.next();
 
 		if (verifyAluno(ra)) {
-			System.out.println("verify aluno ok ");
-
 			if (verifyCurso(curso.toUpperCase())) {
-				System.out.println("verify curso ok");
-				
 				if(!(verifyNota1(ra,curso.toUpperCase()))) {
 					
 				try (BufferedWriter bw = new BufferedWriter(
 						new FileWriter(destiny() + "\\Database\\Notas.csv", true))) {
-
 					System.out.print("Digite as notas (NP1,NP2,REP,EX)");
 					Double np1 = sc.nextDouble();
 					Double np2 = sc.nextDouble();
@@ -188,8 +167,7 @@ public class DataBase {
 					bw.newLine();
 
 				} catch (IOException e) {
-					e.printStackTrace();
-					System.out.println("Lista vazia");
+					System.out.println("!!!Lista vazia!!!");
 				} catch (NoSuchElementException e) {
 					System.out.println("!!!Curso inexsistente!!!");
 				}
@@ -203,9 +181,10 @@ public class DataBase {
 				System.out.println("!!!Curso inexistente!!!");
 			}
 		} else {
-			System.out.println("!!!Usuario inexistente!!!");
+			System.out.println("!!!Ra inexistente!!!");
 		}
 	}
+	
 	public Aluno returnAluno(String id) {
 		Aluno alu = new Aluno(id);
 		
@@ -213,42 +192,37 @@ public class DataBase {
 
 			String itemCsv = br.readLine();
 			Stream<String> str = br.lines();
-			
 			Stream<Aluno> ids = str.map(aluno -> {
 				String fields[] = aluno.split(",");
 				return new Aluno(fields[0],fields[1]);
-
 			});
 			Stream<Aluno> alunoFiltrados = ids.filter(aluno -> aluno.equals(alu));
 			return alunoFiltrados.findFirst().get();
 
 		} catch (IOException e) {
-			System.out.println("ERROR");
+			System.out.println("!!!ERROR!!!");
 		} catch (NoSuchElementException e) {
+			System.out.println("!!!Ra não encontrado!!!");
 		}
 		return null;
 	}
 
  	public Curso returnCurso(String curso) {
  		Curso cur =new Curso(curso.toUpperCase());
- 		 SimpleDateFormat sdf =new SimpleDateFormat("yyyy");
+ 		
  		try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Curso.csv"))) {
  			String itemCsv = br.readLine();
- 			 Stream<String> str = br.lines();
- 			 
- 			Stream<Curso> cursos = str.map(nome -> { 
- 				 String fields[] = nome.split(",");
- 				
+ 			 Stream<String> str = br.lines(); 
+ 			Stream<Curso> cursos = str.map(nome -> {String fields[] = nome.split(",");
  				return new Curso(fields[0],Nivel.valueOf(fields[1]), fields[2]);
  			 });
- 			
  			Stream<Curso> cursoFiltrados = cursos.filter(nome -> nome.equals(cur));
  			return cursoFiltrados.findFirst().get();
  			
  		}catch( IOException e) {
- 			System.out.println("ERROR");
+ 			System.out.println("!!!ERROR!!!");
 		} catch (NoSuchElementException e) {
-			System.out.println("Not found");
+			System.out.println("!!!Ra não encontrado!!!");
 		}catch (NullPointerException e) {
 			e.printStackTrace();
 		}
@@ -264,7 +238,6 @@ public class DataBase {
  			while (itemCsv != null) {
  			
  				String fields[] = itemCsv.split(",");
- 			
  				String ra = fields[0];
  				String curso = fields[1];
  				Double np1 = Double.parseDouble(fields[2]);
@@ -282,11 +255,11 @@ public class DataBase {
  			}
  			return list;
  		}catch (IOException e) {
- 			e.printStackTrace();
+ 			System.out.println("!!!ERROR!!!");
  		}
- 		
  		return null;
 	}
+ 	
  	public List<Nota> returnHistoricoCurso(String id) {
  		List<Nota> list = new ArrayList<>();
  		try (BufferedReader br = new BufferedReader(new FileReader(destiny()+ "\\Database\\Notas.csv"))) {
@@ -296,7 +269,6 @@ public class DataBase {
  			while (itemCsv != null) {
  			
  				String fields[] = itemCsv.split(",");
- 			
  				String ra = fields[0];
  				String curso = fields[1];
  				Double np1 = Double.parseDouble(fields[2]);
@@ -314,11 +286,11 @@ public class DataBase {
  			}
  			return list;
  		}catch (IOException e) {
- 			e.printStackTrace();
+ 			System.out.println("!!!ERROR!!!");
  		}
- 		
  		return null;
 	}
+ 	
  	public boolean verifyValida(String id) {	
 		List<String> list = new ArrayList<String>();
 		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Notas.csv"))) {
@@ -331,12 +303,13 @@ public class DataBase {
 			}
 			return list.contains(id);
 		} catch (IOException e) {
-			System.out.println("ERROR");
+			System.out.println("!!!ERROR!!!");
 		} catch (NoSuchElementException e) {
-			
+			e.printStackTrace();
 		}
 		return false;
 	}
+ 	
  	public boolean verifyAluno(String id) {	
 		List<String> list = new ArrayList<String>();
 		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Aluno.csv"))) {
@@ -349,14 +322,13 @@ public class DataBase {
 			}
 			return list.contains(id);
 		} catch (IOException e) {
-			System.out.println("ERROR");
+			System.out.println("!!!ERROR!!!");
 		} catch (NoSuchElementException e) {
-			
+			e.printStackTrace();
 		}
 		return false;
 	}
  	
-
  	public boolean verifyCurso(String id) {	
 		List<String> list = new ArrayList<String>();
 		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Curso.csv"))) {
@@ -369,12 +341,13 @@ public class DataBase {
 			}
 			return list.contains(id);
 		} catch (IOException e) {
-			System.out.println("ERROR");
+			System.out.println("!!!ERROR!!!");
 		} catch (NoSuchElementException e) {
-			
+			e.printStackTrace();
 		}
 		return false;
 	}
+ 	
  	public boolean verifyNota(String id) {	
 		List<String> list = new ArrayList<String>();
 		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Notas.csv"))) {
@@ -384,20 +357,18 @@ public class DataBase {
 			while((line = br.readLine()) != null) {
 				
 				list.add(line.split(",")[1]);
-				
-			
 			}
 			return list.contains(id);
 			
 		} catch (IOException e) {
-			System.out.println("ERROR");
+			System.out.println("!!!ERROR!!!");
 		} catch (NoSuchElementException e) {
-			
+			e.printStackTrace();
 		}
 		return false;
 	}
- 	public boolean verifyNota1(String id, String id2) {	
-		List<String> list = new ArrayList<String>();
+ 	
+ 	public boolean verifyNota1(String id, String id2) {		
 		try (BufferedReader br = new BufferedReader(new FileReader(destiny() + "\\Database\\Notas.csv"))) {
 
 			br.readLine();
@@ -411,9 +382,9 @@ public class DataBase {
 				}
 			}	
 		} catch (IOException e) {
-			System.out.println("ERROR");
+			System.out.println("!!!ERROR!!!");
 		} catch (NoSuchElementException e) {
-			
+			e.printStackTrace();
 		}
 		return false;
 	}

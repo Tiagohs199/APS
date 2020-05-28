@@ -20,11 +20,6 @@ public class Aluno {
 	public List<Curso> getCurso() {
 		return curso;
 	}
-
-	public void setCurso(List<Curso> curso) {
-		this.curso = curso;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -33,13 +28,13 @@ public class Aluno {
 	}
 	
 	public String toString1() {
-		return "Aluno ="+nome+"Cursos ="+getCurso();
+		return "Aluno = "+nome+"Cursos = "+getCurso();
 	}
 
 
 	@Override
 	public String toString() {
-		return "Aluno - nome = " + nome+"--id = " + id  ;
+		return "Aluno - nome = " + nome+", Ra = " + id+","  ;
 	}
 	@Override
 	public int hashCode() {
@@ -64,9 +59,4 @@ public class Aluno {
 			return false;
 		return true;
 	}
-
-	
-
-	
-
 }

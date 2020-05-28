@@ -1,7 +1,5 @@
 package Entities;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import Entities.enums.Nivel;
@@ -10,9 +8,7 @@ public class Curso {
 	private String nome;
 	private Nivel nivel;
 	private String ano;
-	
 	private List<Double> notas;
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 	
 	public Curso(String nome) {
 		this.nome = nome;
@@ -21,8 +17,7 @@ public class Curso {
 		this.nome = nome;
 		this.nivel = nivel;
 	}
-	public Curso(String nome, Nivel nivel, String ano) {
-		
+	public Curso(String nome, Nivel nivel, String ano) {	
 		this.nome = nome;
 		this.nivel = nivel;
 		this.ano = ano;
@@ -40,15 +35,10 @@ public class Curso {
 	public List<Double> getNotas() {
 		return notas;
 	}
-	public void setNotas(List<Double> notas) {
-		this.notas = notas;
-	}
-	
-	
 	
 	@Override
 	public String toString() {
-		return "Curso =" + nome + ", nivel = "+ getNivel()+" Date ="+getAno();
+		return "Curso = " + nome + ", nivel = "+ getNivel()+", Date = "+getAno()+",";
 	}
 
 	@Override
@@ -75,5 +65,4 @@ public class Curso {
 			return false;
 		return true;
 	}
-	
 }

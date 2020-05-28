@@ -2,12 +2,12 @@ package Entities;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Menu {
 	public Menu() {
 	}
-	
 	public void inicial() {
 		DataBase data = new DataBase();
 		Scanner sc = new Scanner(System.in);
@@ -39,8 +39,7 @@ public class Menu {
 		case 5:
 			List<Curso> lisCurso = data.getAllCurso();
 			lisCurso.forEach(curso -> System.out.println(curso));
-			back();
-			
+			back();	
 		case 6:
 			System.out.print("Digite o Ra do aluno: ");
 			String id = sc.next();
@@ -61,15 +60,13 @@ public class Menu {
 		case 0:
 			System.exit(0);
 		}
-	
 		}catch (InputMismatchException e) {
 			System.out.println("!!Valor invalido!!");
+		}catch (NoSuchElementException e) {
+			System.out.println("!!!Valor não encontrado!!!");
 		}
-		
-		
 		sc.close();
 	}
-	
 	
 	public void back() {
 		Scanner sc = new Scanner(System.in);
@@ -83,5 +80,4 @@ public class Menu {
 			System.exit(0);
 		}
 	}
-	
 }
