@@ -1,12 +1,8 @@
 package Entities;
 
-import java.util.List;
-
 public class Aluno {
 	private String id;
 	private String nome;
-	private List<Curso> curso;
-	
 	
 	public Aluno(String id) {
 		this.id = id;
@@ -17,21 +13,12 @@ public class Aluno {
 		this.nome = nome;
 	}
 	
-	public List<Curso> getCurso() {
-		return curso;
-	}
 	public String getId() {
 		return id;
 	}
 	public String getNome() {
 		return nome;
 	}
-	
-	public String toString1() {
-		return "Aluno = "+nome+"Cursos = "+getCurso();
-	}
-
-
 	@Override
 	public String toString() {
 		return "Aluno - nome = " + nome+", Ra = " + id+","  ;

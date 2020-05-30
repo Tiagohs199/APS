@@ -1,14 +1,11 @@
 package Entities;
 
-import java.util.List;
-
 import Entities.enums.Nivel;
 
 public class Curso {
 	private String nome;
 	private Nivel nivel;
 	private String ano;
-	private List<Double> notas;
 	
 	public Curso(String nome) {
 		this.nome = nome;
@@ -32,10 +29,6 @@ public class Curso {
 	public String getAno() {
 		return ano;
 	}
-	public List<Double> getNotas() {
-		return notas;
-	}
-	
 	@Override
 	public String toString() {
 		return "Curso = " + nome + ", nivel = "+ getNivel()+", Date = "+getAno()+",";

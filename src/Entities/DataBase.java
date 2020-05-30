@@ -22,7 +22,6 @@ public class DataBase {
 	public DataBase() {
 	}
 	Menu menu = new Menu();
-	Aluno aluno;
 
 	public String destiny() {	
 		
@@ -37,6 +36,7 @@ public class DataBase {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("-----------------------");
 
+		
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(destiny() + "\\Database\\Aluno.csv", true))) {
 			System.out.print("Digite o numero de alunos a ser adicionado: ");
 			int n = sc.nextInt();
@@ -169,7 +169,8 @@ public class DataBase {
 				} catch (IOException e) {
 					System.out.println("!!!Lista vazia!!!");
 				} catch (NoSuchElementException e) {
-					System.out.println("!!!Curso inexsistente!!!");
+					System.out.println("!!!Valor invalido!!!");
+					menu.inicial();
 				}
 				System.out.println("Adicionado com sucesso!!");
 				menu.back();
