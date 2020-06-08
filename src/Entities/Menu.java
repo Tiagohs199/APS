@@ -1,5 +1,6 @@
 package Entities;
 
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -34,6 +35,7 @@ public class Menu {
 			back();
 		case 4:
 			List<Aluno> lisAluno = data.getAllAluno();
+			Collections.sort(lisAluno);
 			 lisAluno.forEach(aluno -> System.out.println(aluno));
 			back();
 		case 5:

@@ -1,6 +1,6 @@
 package Entities;
 
-public class Aluno {
+public class Aluno implements Comparable<Aluno>{
 	private String id;
 	private String nome;
 	
@@ -45,5 +45,10 @@ public class Aluno {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Aluno o) {
+		return  nome.compareTo(o.getNome());
 	}
 }
